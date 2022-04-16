@@ -19,6 +19,8 @@
                 {% if request.user in receita.likes.all %}
                 <div><button class="icon"><i id="like{{receita.id}}" data-receita_id="{{receita.id}}" class="fa-solid fa-heart like"></i></button><b>{{receita.likes.all.count}}</b></div>
                 {% elif receita.sender == request.user %}
+                
+                {% elif not user.is_authenticated %}
 
                 {% else %}
                 <div><button class="icon"><i id="like{{receita.id}}" data-receita_id="{{receita.id}}" class="fa-regular fa-heart like"></i></button><b>{{receita.likes.all.count}}</b></div>
