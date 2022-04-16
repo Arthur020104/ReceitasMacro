@@ -1,0 +1,1 @@
+web: gunicorn finalproject_cs50web.wsgi --log-file -
