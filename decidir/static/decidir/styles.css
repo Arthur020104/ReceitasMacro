@@ -289,13 +289,17 @@ span
     {
         display:table-row!important;
         display: inline;
-        margin-left: 0.1%!important;
+        margin-left: 0!important;
         margin-bottom: 5px!important;
         width: 15rem!important;
     }
     .row-full
     {
         margin-top: 10px!important;
+    }
+    .card-title
+    {
+        margin-left: 20%!important;
     }
 }
 @media (max-width:1920px) and (min-width:570px)
