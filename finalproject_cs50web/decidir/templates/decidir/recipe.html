@@ -1,0 +1,28 @@
+{% extends "decidir/layout.html" %}
+{% block title %}Criar receita{% endblock %}
+{% block body %}
+    {% if message %}
+        <div class="alert-warning alert">{{ message }}</div>
+    {% endif %}
+    <h2 class="text-center title">Criar receita</h2>
+
+    <div class="container text-center">
+        <div class="form-group">
+            <input id="nome_receita" autocomplete="off" class="form-control" autofocus type="text" name="recipe_name" placeholder="Nome da Receita">
+        </div>
+        <div class="form-group">
+            <p>Ao final de cada imagem colocar uma vírgula. Exemplo:https://logo/1/logo.jpg, https://logo/2/logo.jpg</p>
+            <textarea placeholder="Imagens da receita (url)." name="recipe_img" id="img_receita" autocomplete="off" class="form-control textarea" rows="5" placeholder="Ingredientes"  type="text" autocomplete="off"></textarea>
+        </div>
+        <div class="form-group">
+            <p>Insira uma lista de ingredientes. Exemplo "100g cooked rice, 150g chicken breast". Digite cada ingrediente em uma nova linha em inglês ou se precisar botão traduzir a baixo.</p>
+            <p>OBS:Todo ingrediente a gosto especificar apenas no modo de preparo.</p>
+            <textarea id="ingred" autocomplete="off" class="form-control textarea" rows="5" placeholder="Ingredientes"  type="text" autocomplete="off"></textarea>
+        </div>
+        <input id="btn_traduzir" type="submit" value="Traduzir" class="btn">
+        <div class="form-group">
+            <textarea autocomplete="off" id="modopreparo_receita" class="form-control textarea" rows="5" placeholder="Modo de Preparo"  type="text" autocomplete="off"></textarea>
+        </div>
+        <input id="recipe-make" type="submit" value="Finalizar" class="btn">
+    </div>
+{% endblock %}
