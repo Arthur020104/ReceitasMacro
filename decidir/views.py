@@ -171,3 +171,15 @@ def likes(request):
             recipe.likes.add(user)
             return JsonResponse({'receita_id': recipe_id}, status=202)
     return HttpResponse(401)
+
+@login_required
+def MinhasReceitas(request):
+    receitas = receita.objects.filter(sender = request.user).order_by('timestamp').reverse()
+    for tms in receitas:
+        tms.timestamp = datetime.fromtimestamp(float(tms.timestamp))
+    p = Paginator(receitas,6)
+    page = request.GET.get('page')        
+    receitass = p.get_page(page)
+    return render(request,"decidir/Minhasreceitas.html",{
+        "receitas": receitass
+    })
