@@ -71,7 +71,7 @@ span
 .col-lg-3
 {
     margin-top: 5rem!important;
-    margin: auto;
+    margin: auto!important;
 }
 .icon
 {
@@ -283,7 +283,7 @@ span
     }
 
 }
-@media (max-width:570px) 
+@media (max-width:500px) 
 {
     .coluna-full
     {
@@ -299,7 +299,7 @@ span
     }
     .col-lg-3
     {
-        margin-top: 5rem!important;
+        margin-top: 8%!important;
         margin-left: 9%!important;
     }
 }
@@ -328,16 +328,19 @@ span
     border: 1px solid;
     border-radius: 4px;
 }
-@media (max-width:990px) and (min-width:570px)
+@media (max-width:760px) and (min-width:500px)
 {
-    .col-lg-3
-{
-    margin-top: 5rem!important;
-    margin-left: 30%!important;
-}
-}
 .col-lg-3
 {
     margin-top: 5rem!important;
-    margin: auto;
+    margin-left: 20%!important;
+}
+}
+@media (max-width:900px) and (min-width:760px)
+{
+.col-lg-3
+{
+    margin-top: 5rem!important;
+    margin-left: 25%!important;
+}
 }
