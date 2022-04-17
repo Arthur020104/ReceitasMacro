@@ -289,13 +289,18 @@ span
     {
         display:table-row!important;
         display: inline;
-        margin-left: 0.1%!important;
+        margin-left: 0!important;
         margin-bottom: 5px!important;
         width: 15rem!important;
     }
     .row-full
     {
         margin-top: 10px!important;
+    }
+    .col-lg-3
+    {
+        margin-top: 5rem!important;
+        margin-left: 9%!important;
     }
 }
 @media (max-width:1920px) and (min-width:570px)
@@ -322,4 +327,17 @@ span
     background-color: #4d4dba4d;
     border: 1px solid;
     border-radius: 4px;
+}
+@media (max-width:990px) and (min-width:570px)
+{
+    .col-lg-3
+{
+    margin-top: 5rem!important;
+    margin-left: 30%!important;
+}
+}
+.col-lg-3
+{
+    margin-top: 5rem!important;
+    margin: auto;
 }
