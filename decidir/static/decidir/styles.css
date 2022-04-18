@@ -8,17 +8,33 @@ button, input[type="submit"]
 {
     background-color: #4d4Dba;
     color: #fff;
-    outline: none!important;
-    transition: color .25s ease-in-out,background-color .25s ease-in-out,border-color .25s ease-in-out,box-shadow .25s ease-in-out!important;
+    outline: none;
+    transition: color .25s ease-in-out,background-color .25s ease-in-out,border-color .25s ease-in-out,box-shadow .25s ease-in-out;
 }
 button, input[type="submit"]:hover
 {
     background-color: #fff;
     color: #4d4Dba;
     border-color: #4d4Dba;
+    outline: none;
+
+}
+.btns_macro
+{
+    background-color: #4d4Dba!important;
+    color: #fff!important;
+    outline: none!important;
+    transition: color .25s ease-in-out,background-color .25s ease-in-out,border-color .25s ease-in-out,box-shadow .25s ease-in-out!important;
+}
+.btns_macro:hover
+{
+    background-color: #fff!important;
+    color: #4d4Dba!important;
+    border-color: #4d4Dba!important;
     outline: none!important;
 
 }
+
 body
 {
     font-family: Helvetica,sans-serif;

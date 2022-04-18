@@ -58,21 +58,29 @@ function alert(message)
   {
     alerts.classList.add('alert-danger', "alert");
     alerts.innerHTML = message['error'];
+    alerts.animationDuration = 4000;
+    temp = 5000;
   }
   else if("warning" in message)
   {
     alerts.classList.add('alert-warning', "alert");
     alerts.innerHTML = message['warning'];
+    alerts.animationDuration = 4000;
+    temp = 5000;
   }
   else if("loading" in message)
   {
     alerts.classList.add('alert-loding', "alert");
     alerts.innerHTML = message['loading'];
+    alerts.animationDuration = 1000;
+    temp = 1500;
   }
   else
   {
     alerts.classList.add('alert-success', "alert");
     alerts.innerHTML = message['message'];
+    alerts.animationDuration = 3000;
+    temp = 4000;
   }
 
 
@@ -87,16 +95,24 @@ function alert(message)
     {
       alerts.remove();
     })
-  }, 5000);
+  }, temp);
 }
 document.addEventListener('DOMContentLoaded',()=>{
+
+let message = document.getElementById("message")
+if (message)
+{
+  alert({"error":message.innerHTML})
+}
+
   //document.querySelector('#fullpage').style.display = 'none';
   let recipebtn = document.querySelector("#recipe-make");
 
   if (recipebtn)
   {
     let content = document.querySelector("#ingred");
-    recipebtn.addEventListener('click',function click()
+    //recipebtn.addEventListener('click',
+    function click()
     {
       let foods = content.value.split('\n');
       let nutricion = {"calorias": 0, "carboidratos":0, "proteinas": 0, "gorduras":0};
@@ -123,6 +139,7 @@ document.addEventListener('DOMContentLoaded',()=>{
               counter++;
               if(foods.length == counter)
               {
+                document.getElementById("nutricion").value = nutricion.calorias+","+nutricion.carboidratos+","+nutricion.proteinas+","+ nutricion.gorduras;/*
                 imgs = document.querySelector("#img_receita").value.split(',');
                 fetch('/receita', 
                 {
@@ -153,6 +170,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     window.location.replace("/");
                   }
                 });
+                */
               }
             }
             catch(e)
@@ -188,7 +206,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         });
       }
 
-    });
+    }
   }
   btn_tradutor = document.getElementById('btn_traduzir');
   if(btn_tradutor)
@@ -210,6 +228,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       {
         // Print result
         content.value = result.traducao;
+        click();
         //console.log(result.traducao);
       });
     });

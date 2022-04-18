@@ -5,7 +5,7 @@
     <h2 class="text-center title">Login</h2>
 
     {% if message %}
-        <div class="alert-danger alert">{{ message }}</div>
+        <div id="message" style="display: none;">{{ message }}</div>
     {% endif %}
     <div class="container mg-auto">
         <form action="{% url 'login'%}" method="post">

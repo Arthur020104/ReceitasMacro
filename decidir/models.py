@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class User(AbstractUser):
     pass
 class Img(models.Model):
-    img = models.CharField(max_length=500)
+    img = models.ImageField(null=False,blank=False, upload_to="images/")
 
 class receita(models.Model):
     name = models.CharField(max_length=50)
