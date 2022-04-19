@@ -91,36 +91,48 @@ def info(request, content, id):
         recepuni = recipe.serialize()
         imgs = []
         for img in recepuni["img"].all():
-            imgs.append(img.img)
+            if "/media/images/" in img.img.url:
+                imgs.append(img.img.url)
+                print(img.img.url)
+            else:
+                print(img.img)
+                url = str(img.img)
+                imgs.append(url)
         recepuni["img"] = imgs
         return JsonResponse(recepuni,status=200)
     pass
 @login_required
-@csrf_exempt
 def create_recipe(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        calorias = float(data.get("calorias", ""))
-        gorduras = float(data.get("gorduras", ""))
-        proteinas = float(data.get("proteinas", ""))
-        carboidratos = float(data.get("carboidratos", ""))
-        foods = data.get("foods","")
-        imgs = data.get("imgs","")
-        name = data.get("name","")
-        modoPreparo = data.get("modopreparo","")
-        if not calorias or not gorduras or not proteinas or not carboidratos or not foods or not imgs or not name:
-            return JsonResponse(
-            {
-            "error": "Todos campos precisam ser preenchidos."
-            }, status=400)
+        #data = json.loads(request.body)
+        #calorias = float(data.get("calorias", ""))
+        #gorduras = float(data.get("gorduras", ""))
+        #proteinas = float(data.get("proteinas", ""))
+        #carboidratos = float(data.get("carboidratos", ""))
+        nutricion = request.POST["nutricion"]
+        foods = request.POST["foods"]
+        imgs = request.FILES.getlist('images')
+        name = request.POST["name"]
+        modoPreparo = request.POST["modopreparo"]
+        nutricion = nutricion.split(",")
+        if not nutricion or not foods or not imgs or not name:
+            return render(request, "decidir/recipe.html", {
+                "message": "Todos os campos precisam ser preenchidos."
+            })
+
+        calorias = float(nutricion[0])
+        carboidratos = float(nutricion[1])
+        proteinas = float(nutricion[2])
+        gorduras = float(nutricion[3])
 
         tranlator = Translator()
         translations = tranlator.translate(foods, dest='pt')
+        translations = translations.text.split("\n")
         comidas = ''
         for i in range(0,(len(translations))):
             if i == (len(translations)-1):
                 comidas += ' e '
-            comidas += (translations[i].text)
+            comidas += (translations[i])
             if i == (len(translations)-1):
                 comidas += '.'
             elif i != (len(translations)-2):
@@ -129,17 +141,11 @@ def create_recipe(request):
         recipe.save()
         for img in imgs:
             image = Img.objects.create(img = img)
-            image.save()
             recipe.img.add(image)
-        return JsonResponse(
-            {
-            "message": "A receita foi adicionada com sucesso."
-            }, status=200)
+        return HttpResponseRedirect(reverse("index"))
     else:
         if request.user.id:
             return render(request, "decidir/recipe.html")
-        else:
-            return HttpResponseRedirect(reverse("index"))
 
 @login_required
 @csrf_exempt

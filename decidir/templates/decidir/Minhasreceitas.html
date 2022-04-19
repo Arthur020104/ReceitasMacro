@@ -11,7 +11,11 @@
         <div class="col-lg-3">
             {% define forloop.counter|slugify as counter %}
             <div class="card" style="width: 18rem;">
-                <img class="card-img" src="{{receita.img.all.first.img}}" alt="{{receita.name}}">
+                {% if not "/media/images/" in receita.img.all.first.img.url %}
+                    <img class="card-img" src="{{receita.img.all.first.img}}" alt="{{receita.name}}">
+                {% else %}
+                    <img class="card-img" src="{{receita.img.all.first.img.url}}" alt="{{receita.name}}">
+                {% endif %}
                 <div class="card-body">
                 <h5 class="card-title">{{receita.name}}</h5>
                 <p class="card-text">{{receita.ingredientes}}</p>
