@@ -10,7 +10,7 @@ from .models import User, receita, Img
 import json
 from googletrans import Translator
 from datetime import datetime
-
+#New version is buged so this one is fine
 def index(request):
     minute = int(datetime.now().strftime("%M"))
     if minute % 5 == 0:
