@@ -23,6 +23,7 @@ class receita(models.Model):
 
     def serialize(self):
         return {
+
             "id": self.id,
             "name": self.name,
             "img": self.img,
