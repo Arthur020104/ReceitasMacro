@@ -32,8 +32,6 @@ ALLOWED_HOSTS = ['receitasmacro.herokuapp.com','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    "whitenoise.runserver_nostatic",
-    "django.contrib.staticfiles",
     'decidir',
     'django.contrib.admin',
     'django.contrib.auth',

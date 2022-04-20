@@ -1,6 +1,7 @@
-from unicodedata import name
-from django.urls import path
 
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -13,4 +14,4 @@ urlpatterns = [
     path('likes', views.likes, name="likes"),
     path("info/<str:content>/<int:id>", views.info, name="info"),
     path('MinhasReceitas', views.MinhasReceitas, name='MinhasReceitas'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
