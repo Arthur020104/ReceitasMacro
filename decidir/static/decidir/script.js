@@ -45,10 +45,13 @@ function fullpage(receita)
     }
   }
 
-  container_page.innerHTML= "<div class='recipe-info text-center'><h3 class='title text-center color'>"+receita.name+"</h3>"+carousel+"<div class='row row-full'><div class='col-sm-2 coluna-full'><p class='text-center color'>Calorias</p><p class='text-center'>"+Number((receita.calorias).toFixed(1))+"</p></div><div class='col-sm-2 coluna-full'><p class='text-center color'>Carboidratos</p><p class='text-center'>"+Number((receita.carboidratos).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Proteínas</p><p class='text-center'>"+Number((receita.proteinas).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Gorduras</p><p class='text-center'>"+Number((receita.gorduras).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'><i  class='fa-solid fa-heart like color'></i></p><p class='text-center'>"+receita.likes+"</p></div></div></div>";
-  ingredientes.innerHTML = "<div class='ingrdients-info text-center'><h3 class='title text-center color'>Ingredientes <i class='fa-solid fa-cart-shopping color'></i></h3><p class='text-center text'>"+receita.ingredientes+"</p></div>";
-  modopreparo.innerHTML = "<div class='ingrdients-info text-center'><h3 class='title text-center color'>Modo de preparo<i class='fa-solid fa-kitchen-set'></i></h3><p class='text-center text'>"+receita.modoPreparo+"</p></div>";
-
+  container_page.innerHTML= "<div class='recipe-info text-center'><h3 class='title-full text-center color'>"+receita.name+"</h3>"+carousel+"<div class='row row-full'><div class='col-sm-2 coluna-full'><p class='text-center color'>Calorias</p><p class='text-center'>"+Number((receita.calorias).toFixed(1))+"</p></div><div class='col-sm-2 coluna-full'><p class='text-center color'>Carboidratos</p><p class='text-center'>"+Number((receita.carboidratos).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Proteínas</p><p class='text-center'>"+Number((receita.proteinas).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Gorduras</p><p class='text-center'>"+Number((receita.gorduras).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'><i  class='fa-solid fa-heart like color'></i></p><p class='text-center'>"+receita.likes+"</p></div></div></div>";
+  ingredientes.innerHTML = "<div class='ingrdients-info text-center'><h3 class='title-full text-center color'>Ingredientes <i class='fa-solid fa-cart-shopping color'></i></h3><p class='text-center text'>"+receita.ingredientes+"</p></div>";
+  modopreparo.innerHTML = "<div class='ingrdients-info text-center'><h3 class='title-full text-center color'>Modo de preparo<i class='fa-solid fa-kitchen-set'></i></h3><p class='text-center text'>"+receita.modoPreparo+"</p></div>";
+  if(localStorage.getItem("mode")=="dark")
+  {
+    darkfull();
+  }
 }
 function alert(message)
 {
@@ -109,14 +112,14 @@ function dark()
   document.querySelectorAll('.card-body').forEach(card =>{
     card.classList.toggle('dark-mode-body');
   });
-  document.querySelectorAll('.title').forEach(card =>{
-    card.classList.toggle('dark-mode-body');
+  document.querySelectorAll('.title').forEach(title =>{
+    title.classList.toggle('dark-nav');
   });
   document.querySelectorAll('.nav-item').forEach(item =>{
     item.classList.toggle('dark-nav');;
   });
-  document.querySelectorAll('.form-control').forEach(item =>{
-    item.classList.toggle('textarea-dark');;
+  document.querySelectorAll('.form-control').forEach(form_control =>{
+    form_control.classList.toggle('textarea-dark');;
   });
 
   document.querySelectorAll('.page-link').forEach(btn =>{
@@ -126,15 +129,24 @@ function dark()
   document.querySelector('nav').classList.toggle('dark-mode-nav');
   document.getElementById('footer').classList.toggle('dark-mode-body');
   let img = document.getElementById("imgfooter")
+  let recipefull = document.querySelector('.recipe-info')
   if(localStorage.getItem("mode")=="dark")
   {
     img.src = "https://live.staticflickr.com/65535/52005494254_36941ac353_m.jpg";
     localStorage.setItem("mode", "light");
+    if(recipefull)
+    {
+      darkfull();
+    }
   }
   else
   {
     localStorage.setItem("mode", "dark");
     img.src = "https://live.staticflickr.com/65535/52019582566_81ba0ca97d_m.jpg";
+    if(recipefull)
+    {
+      darkfull();
+    }
   }
 }
 
@@ -339,3 +351,19 @@ if (message)
 
 
 });
+function darkfull()
+{
+  console.log("aaaaaaaaaaaaaaaaaaaaaa");
+  document.querySelectorAll('.recipe-info').forEach(recipe_info=>
+    {
+      recipe_info.classList.toggle('textarea-dark')
+    });
+  document.querySelectorAll('.ingrdients-info').forEach(ingredientes_info=>
+    {
+      ingredientes_info.classList.toggle('textarea-dark')
+    });
+  document.querySelectorAll('.col-sm-2').forEach(col=>
+    {
+      col.classList.toggle('col-sm-2-black')
+    });
+}
