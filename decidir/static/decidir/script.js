@@ -99,6 +99,55 @@ function alert(message)
 }
 document.addEventListener('DOMContentLoaded',()=>{
 
+let darkmode = document.querySelector("#darkmode");
+function dark()
+{
+  document.querySelector(".navbar-toggler").classList.toggle('toggler-icon-dark');
+  document.querySelectorAll('.btn').forEach(btn =>{
+    btn.classList.toggle('button-dark-mode');
+  });
+  document.querySelectorAll('.card-body').forEach(card =>{
+    card.classList.toggle('dark-mode-body');
+  });
+  document.querySelectorAll('.title').forEach(card =>{
+    card.classList.toggle('dark-mode-body');
+  });
+  document.querySelectorAll('.nav-item').forEach(item =>{
+    item.classList.toggle('dark-nav');;
+  });
+  document.querySelectorAll('.form-control').forEach(item =>{
+    item.classList.toggle('textarea-dark');;
+  });
+
+  document.querySelectorAll('.page-link').forEach(btn =>{
+    	btn.classList.toggle('page-link-dark-mode');
+  });
+  document.querySelector('body').classList.toggle('dark-mode-body');
+  document.querySelector('nav').classList.toggle('dark-mode-nav');
+  document.getElementById('footer').classList.toggle('dark-mode-body');
+  let img = document.getElementById("imgfooter")
+  if(localStorage.getItem("mode")=="dark")
+  {
+    img.src = "https://live.staticflickr.com/65535/52005494254_36941ac353_m.jpg";
+    localStorage.setItem("mode", "light");
+  }
+  else
+  {
+    localStorage.setItem("mode", "dark");
+    img.src = "https://live.staticflickr.com/65535/52019582566_81ba0ca97d_m.jpg";
+  }
+}
+
+darkmode.addEventListener('click',dark);
+
+if(localStorage.getItem("mode")=="dark")
+{
+  localStorage.setItem("mode", "light");
+  dark();
+}
+
+
+
 let message = document.getElementById("message")
 if (message)
 {
