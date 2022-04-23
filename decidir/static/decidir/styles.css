@@ -429,3 +429,8 @@ span
     font-family: Helvetica, sans-serif;
     font-weight: 700!important;
 }
+.center
+{
+    margin-left: 45%!important;
+    text-align: left!important;
+}

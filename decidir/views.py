@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from .models import User, receita, Img
+from .models import User, receita, Img, Label
 import json
 from googletrans import Translator
 from datetime import datetime
@@ -104,6 +104,13 @@ def info(request, content, id):
 @login_required
 def create_recipe(request):
     if request.method == 'POST':
+        labels = []
+        for item in Label.objects.all():
+            labels.append(item.name)
+        my_lables = []
+        for post in request.POST:
+            if post in labels:
+                my_lables.append(Label.objects.get(name=post))
         #data = json.loads(request.body)
         #calorias = float(data.get("calorias", ""))
         #gorduras = float(data.get("gorduras", ""))
@@ -117,9 +124,9 @@ def create_recipe(request):
         nutricion = nutricion.split(",")
         if not nutricion or not foods or not imgs or not name:
             return render(request, "decidir/recipe.html", {
-                "message": "Todos os campos precisam ser preenchidos."
+                "message": "Todos os campos precisam ser preenchidos.",
+                "labels": Label.objects.all()
             })
-
         calorias = float(nutricion[0])
         carboidratos = float(nutricion[1])
         proteinas = float(nutricion[2])
@@ -142,10 +149,15 @@ def create_recipe(request):
         for img in imgs:
             image = Img.objects.create(img = img)
             recipe.img.add(image)
+        for label in my_lables:
+            recipe.label.add(label)
         return HttpResponseRedirect(reverse("index"))
     else:
         if request.user.id:
-            return render(request, "decidir/recipe.html")
+            label = Label.objects.all()
+            return render(request, "decidir/recipe.html",{
+                "labels":label
+            })
 
 @login_required
 @csrf_exempt

@@ -8,8 +8,13 @@ class User(AbstractUser):
 class Img(models.Model):
     img = models.ImageField(null=False,blank=False, upload_to="images/")
 
+
+class Label(models.Model):
+    name = models.CharField(max_length=50) 
+
+
 class receita(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=80)
     img = models.ManyToManyField(Img,blank=True,related_name="imgs")
     ingredientes = models.CharField(max_length=800)
     calorias = models.FloatField(validators=[MinValueValidator(100)])
@@ -20,6 +25,7 @@ class receita(models.Model):
     likes = models.ManyToManyField(User,blank=True,related_name="liked")
     sender = models.ForeignKey(User, on_delete=models.PROTECT, related_name="sender")
     modoPreparo = models.CharField(max_length=3000)
+    label = models.ManyToManyField(Label,blank=True,related_name="receita")
 
     def serialize(self):
         return {
@@ -37,4 +43,5 @@ class receita(models.Model):
             "sender": self.sender.username,
             "modoPreparo": self.modoPreparo
         }
+
 
