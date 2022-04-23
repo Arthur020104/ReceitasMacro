@@ -93,9 +93,7 @@ def info(request, content, id):
         for img in recepuni["img"].all():
             if "/media/images/" in img.img.url:
                 imgs.append(img.img.url)
-                print(img.img.url)
             else:
-                print(img.img)
                 url = str(img.img)
                 imgs.append(url)
         recepuni["img"] = imgs
@@ -201,3 +199,46 @@ def MinhasReceitas(request):
     return render(request,"decidir/Minhasreceitas.html",{
         "receitas": receitass
     })
+
+@csrf_exempt
+def buscar(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        content = data.get("content","")
+        filtro = data.get("filtro","")
+        if filtro:
+            filtro = Label.objects.get(pk=filtro).id
+        receitas = receita.objects.filter(name__contains=content)
+        receitar = []
+        for recepi in receitas:
+            filtros = []
+            if filtro:
+                for item in recepi.label.all():
+                    filtros.append(item.id)
+                if filtro in filtros:
+                    recepi = recepi.serialize()
+                    imgs = []
+                    for img in recepi["img"].all():
+                        if "/media/images/" in img.img.url:
+                            imgs.append(img.img.url)
+                        else:
+                            url = str(img.img)
+                            imgs.append(url)
+                    recepi["img"] = imgs
+                    receitar.append(recepi)
+            else:
+                recepi = recepi.serialize()
+                imgs = []
+                for img in recepi["img"].all():
+                    if "/media/images/" in img.img.url:
+                        imgs.append(img.img.url)
+                    else:
+                        url = str(img.img)
+                        imgs.append(url)
+                recepi["img"] = imgs
+                receitar.append(recepi)
+        return JsonResponse(receitar, status=202, safe=False)
+
+    return render(request, "decidir/busca.html",{
+                "labels":Label.objects.all()
+            })

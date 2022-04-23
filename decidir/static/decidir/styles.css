@@ -434,3 +434,21 @@ span
     margin-left: 45%!important;
     text-align: left!important;
 }
+.form-control:focus
+{
+    border-color: #4d4dbad0!important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #4d4dbaad!important;
+    outline: 0 none;
+}
+select {
+    -webkit-border-radius:25px; -moz-border-radius:25px; border-radius:25px;
+}
+
+select:hover {    
+    background-color:gren;
+}
+.dropdown
+{
+    margin-left: 15%!important;
+    margin-right: 15%!important;
+}
