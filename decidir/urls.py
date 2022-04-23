@@ -14,4 +14,5 @@ urlpatterns = [
     path('likes', views.likes, name="likes"),
     path("info/<str:content>/<int:id>", views.info, name="info"),
     path('MinhasReceitas', views.MinhasReceitas, name='MinhasReceitas'),
+    path('busca', views.buscar, name="busca")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

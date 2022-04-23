@@ -1,3 +1,24 @@
+function cardbtn(cards_btn)
+{
+  cards_btn.forEach(card=>
+    {
+      card.addEventListener("click",()=>
+      {
+        let id = card.dataset.id_receita;
+        fetch('/info/receita/'+id)
+        .then(response => response.json())
+        .then(receita => {
+          // Print receita
+          // console.log(receita);
+          if("error" in receita)
+          {
+            alert(receita);
+          }
+          fullpage(receita)
+        });
+      });
+    });
+}
 function fullpage(receita)
 {
   document.querySelector('#receitas').style.display = 'none';
@@ -101,6 +122,56 @@ function alert(message)
   }, temp);
 }
 document.addEventListener('DOMContentLoaded',()=>{
+
+let busca = document.getElementById("busca")
+if(busca)
+{
+  busca.addEventListener("keyup",()=>{
+    var e = document.querySelector(".dropdown");
+    var filtro = e.options[e.selectedIndex].value;
+    fetch('/busca', 
+    {
+      method : 'POST',
+      body: JSON.stringify(
+      {
+        content: busca.value,
+        filtro: filtro 
+      })
+    })
+    .then(response => response.json())
+    .then(result => 
+    {
+      let parent = document.getElementById('parent');
+      parent.innerHTML = '';
+      let counter = 0;
+      let contentdis = document.createElement('div');
+      contentdis.classList.add('row');
+      let x = contentdis;
+      for(results in result)
+      {
+        counter++;
+        if(counter % 3 == 0)
+        {
+          parent.appendChild(x);
+          let row = document.createElement('div');
+          row.classList.add('row');
+          x = row;
+        }
+        if(localStorage.getItem("mode")=="light")
+        {
+          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn">Ver receita</a></div></div></div>';
+        }
+        else
+        {
+          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body dark-mode-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn button-dark-mode">Ver receita</a></div></div></div>';
+        }
+      }
+      parent.appendChild(x);
+      let cards_btn = document.querySelectorAll(".cards_btn");
+      cardbtn(cards_btn);
+    });
+    });
+}
 
 let darkmode = document.querySelector("#darkmode");
 function dark()
@@ -326,29 +397,11 @@ if (message)
           });
       })
   }
-  cards_btn = document.querySelectorAll(".cards_btn");
+  let cards_btn = document.querySelectorAll(".cards_btn");
   if(cards_btn)
   {
-    cards_btn.forEach(card=>
-      {
-        card.addEventListener("click",()=>
-        {
-          let id = card.dataset.id_receita;
-          fetch('/info/receita/'+id)
-          .then(response => response.json())
-          .then(receita => {
-            // Print receita
-            // console.log(receita);
-            if("error" in receita)
-            {
-              alert(receita);
-            }
-            fullpage(receita)
-          });
-        });
-      });
+    cardbtn(cards_btn);
   }
-
 
 });
 function darkfull()

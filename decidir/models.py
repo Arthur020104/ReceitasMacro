@@ -1,16 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import datetime
 
 # Create your models here.
 class User(AbstractUser):
     pass
 class Img(models.Model):
     img = models.ImageField(null=False,blank=False, upload_to="images/")
-
+    def __str__(self):
+        return f"{self.id}: {self.img.url}"
 
 class Label(models.Model):
-    name = models.CharField(max_length=50) 
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return f"{self.id}: {self.name}"
 
 
 class receita(models.Model):
@@ -27,9 +31,11 @@ class receita(models.Model):
     modoPreparo = models.CharField(max_length=3000)
     label = models.ManyToManyField(Label,blank=True,related_name="receita")
 
+    def __str__(self):
+        return f"{self.id}: {self.name}| Sender: {self.sender.username}"
     def serialize(self):
+        timestamp = datetime.fromtimestamp(float(self.timestamp)).strftime("%d %B, %Y")
         return {
-
             "id": self.id,
             "name": self.name,
             "img": self.img,
@@ -38,7 +44,7 @@ class receita(models.Model):
             "carboidratos": self.carboidratos,
             "proteinas": self.proteinas,
             "gorduras": self.gorduras,
-            "timestamp": self.timestamp,
+            "timestamp": timestamp,
             "likes": self.likes.all().count(),
             "sender": self.sender.username,
             "modoPreparo": self.modoPreparo
