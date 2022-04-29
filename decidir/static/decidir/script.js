@@ -21,6 +21,11 @@ function cardbtn(cards_btn)
 }
 function fullpage(receita)
 {
+  let busca = document.getElementById("busca-form");
+  if(busca)
+  {
+    busca.style.display = "none";
+  }
   document.querySelector('#receitas').style.display = 'none';
   let fullpage = document.querySelector('#fullpage');
   fullpage.style.display = 'block';
@@ -126,9 +131,15 @@ document.addEventListener('DOMContentLoaded',()=>{
 let busca = document.getElementById("busca")
 if(busca)
 {
-  busca.addEventListener("keyup",()=>{
-    var e = document.querySelector(".dropdown");
-    var filtro = e.options[e.selectedIndex].value;
+  busca.addEventListener("keyup",function buscar(){
+    let e = document.querySelector(".dropdown");
+    let filtro = e.options[e.selectedIndex].value;
+    let dropdown = document.querySelector(".dropdown");
+
+    dropdown.addEventListener('change',()=>
+    {
+      buscar();
+    });
     fetch('/busca', 
     {
       method : 'POST',
