@@ -22,6 +22,11 @@ function cardbtn(cards_btn)
 function fullpage(receita)
 {
   let busca = document.getElementById("busca-form");
+  let x = document.getElementById("carousel1");
+  if(x)
+  {
+    x.remove();
+  }
   if(busca)
   {
     busca.style.display = "none";
