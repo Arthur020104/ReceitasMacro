@@ -85,10 +85,24 @@ span
     cursor: pointer;
 
 }
+.pd-top-3rem
+{
+    padding-top: 3rem;
+}
+.text-center
+{
+    text-align: center;
+    margin-top: 0!important;
+}
 .col-lg-3
 {
-    margin-top: 5rem!important;
+    margin-top: 0!important;
     margin: auto;
+}
+.row
+{
+    margin-bottom: 3rem!important;
+
 }
 .icon
 {
@@ -457,97 +471,41 @@ select:hover {
 {
     width: 100%;
     margin: auto;
-    margin-top: 3%;
 }
 .d-blocki
 {
     flex-shrink: 0;
-    height: 50vh!important;
     margin: auto!important;
     border-radius: 2px;
+    height: calc(100vh - 62px);
+    width: 100%!important;
 }
 .carousel-control-previ
 {
-    margin-left: 32%;
+    margin-left: 10%;
 }
 .carousel-control-nexti
 {
-    margin-right: 32%;
+    margin-right: 10%;
 }
+
 @media (max-width:500px)
 {
     .d-blocki
     {
         width: 100%!important;
-        height: auto!important;
+        height: 40vh!important;
     }
-    .carousel-control-previ
-    {
-        margin-left: 5%;
-    }
-    .carousel-control-nexti
-    {
-        margin-right: 5%;
-    }
+
 }
-@media (max-width:557px) and (min-width:500px)
+@media (max-width:1000px) and (min-width:500px)
 {
     .d-blocki
     {
         width: 100%!important;
-        height: auto!important;
+        height: 60vh!important;
     }
-    .carousel-control-previ
-    {
-        margin-left: 12%;
-    }
-    .carousel-control-nexti
-    {
-        margin-right: 12%;
-    }
-}
-@media (max-width:700px)  and (min-width:557px)
-{
-    .d-blocki
-    {
-        width: 100%!important;
-        height: auto!important;
-    }
-    .carousel-control-previ
-    {
-        margin-left: 20%;
-    }
-    .carousel-control-nexti
-    {
-     margin-right: 20%;
-    }
-}
-@media (max-width:1000px) and (min-width:700px)
-{
-    .d-blocki
-    {
-        width: 100%!important;
-        height: auto!important;
-    }
-    .carousel-control-previ
-    {
-        margin-left: 23%;
-    }
-    .carousel-control-nexti
-    {
-        margin-right: 23%;
-    }
-}
-@media (max-width:1200px) and (min-width:1000px)
-{
-    .carousel-control-previ
-    {
-        margin-left: 27%;
-    }
-    .carousel-control-nexti
-    {
-        margin-right: 27%;
-    }
+
 }
 @media (max-width:1790px) and (min-width:1200px)
 {
@@ -560,7 +518,12 @@ select:hover {
         margin-right: 30%;
     }
 }
+
 .carousel-caption h5
 {
     color: #e3e3e3;
+    text-transform: lowercase;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.75);
+    font-size: 35px !important;
 }
