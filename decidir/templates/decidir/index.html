@@ -20,12 +20,12 @@
                 {% if forloop.counter == 1 %}
                     <div class="carousel-item active">
                         {% if not "/media/images/" in receita.img.all.first.img.url %}
-                            <a class="cards_btn" data-id_receita="{{receita.id}}"><img class="d-block d-blocki" src="{{receita.img.all.first.img}}" alt="{{receita.name}}"></a>
+                            <a class="cards_btn" data-id_receita="{{receita.id}}"><div class="d-blocki" style='background: url("{{receita.img.all.first.img}}") no-repeat center / cover;'  alt="{{receita.name}}"></div></a>
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{receita.name}}</h5>
                             </div>
                         {% else %}
-                            <a class="cards_btn" data-id_receita="{{receita.id}}"><img class="d-block d-blocki" src="{{receita.img.all.first.img.url}}" alt="{{receita.name}}"></a>
+                            <a class="cards_btn" data-id_receita="{{receita.id}}"><div class="d-blocki" style='background: url("{{receita.img.all.first.img.url}}") no-repeat center / cover;'  alt="{{receita.name}}"></div></a>
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>{{receita.name}}</h5>
                             </div>
@@ -34,12 +34,12 @@
                 {% else %}
                 <div class="carousel-item">
                     {% if not "/media/images/" in receita.img.all.first.img.url %}
-                        <a class="cards_btn" data-id_receita="{{receita.id}}"><img class="d-block d-blocki" src="{{receita.img.all.first.img}}" alt="{{receita.name}}"></a>
+                        <a class="cards_btn" data-id_receita="{{receita.id}}"><div class="d-blocki" style='background: url("{{receita.img.all.first.img}}") no-repeat center / cover;'  alt="{{receita.name}}"></div></a>
                         <div class="carousel-caption d-none d-md-block">
                             <h5>{{receita.name}}</h5>
                         </div>
                     {% else %}
-                        <a class="cards_btn" data-id_receita="{{receita.id}}"><img class="d-block d-blocki" src="{{receita.img.all.first.img.url}}" alt="{{receita.name}}"></a>
+                        <a class="cards_btn" data-id_receita="{{receita.id}}"><div class="d-blocki" style='background: url("{{receita.img.all.first.img.url}}") no-repeat center / cover;'  alt="{{receita.name}}"></div></a>
                         <div class="carousel-caption d-none d-md-block">
                             <h5>{{receita.name}}</h5>
                         </div>
@@ -62,7 +62,6 @@
 
 
 
-
     
 
 
@@ -71,7 +70,7 @@
         <div class="container-fluid">
             <div class="row">
     {% for receita in receitas %}
-        <div class="col-lg-3">
+        <div class="col-lg-3 text-center">
             {% define forloop.counter|slugify as counter %}
             <div class="card" style="width: 18rem;">
                 {% if not "/media/images/" in receita.img.all.first.img.url %}
