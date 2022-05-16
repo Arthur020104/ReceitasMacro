@@ -10,17 +10,11 @@ from .models import User, receita, Img, Label
 import json
 from googletrans import Translator
 from datetime import datetime
-#New version is buged so this one is fine
+
 def index(request):
     minute = int(datetime.now().strftime("%M"))
     if minute % 5 == 0:
-        receitas = receita.objects.all().order_by('name')
-    elif minute % 3 == 0:
-        receitas = receita.objects.all().order_by('timestamp').reverse()
-    elif minute % 7 == 0:
-        receitas = receita.objects.all().order_by('name').reverse()
-    elif minute % 11 == 0:
-        receitas = receita.objects.all().order_by('ingredientes')
+         receitas = receita.objects.all().order_by('ingredientes')
     else:
         receitas = receita.objects.all().order_by('likes').reverse()
     for tms in receitas:

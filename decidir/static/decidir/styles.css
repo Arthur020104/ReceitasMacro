@@ -471,22 +471,23 @@ select:hover {
 {
     width: 100%;
     margin: auto;
+    margin-bottom: 30px!important;
 }
 .d-blocki
 {
     flex-shrink: 0;
     margin: auto!important;
     border-radius: 2px;
-    height: calc(100vh - 62px);
-    width: 100%!important;
+    height: 60vh;
+    width: 60%!important;
 }
 .carousel-control-previ
 {
-    margin-left: 10%;
+    margin-left: 18%;
 }
 .carousel-control-nexti
 {
-    margin-right: 10%;
+    margin-right: 18%;
 }
 
 @media (max-width:500px)
@@ -526,4 +527,23 @@ select:hover {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.75);
     font-size: 35px !important;
+}
+.separation_border
+{
+    background-color: #f4f4f4;
+    color: #4d4Dba;
+    padding: 1rem;
+    margin-bottom: 30px;
+}
+.separation_border-dark-mode
+{
+    color: #e3e3e3;
+    background-color: #1a1a1a;
+}
+.separation_border h3
+{
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    line-height: normal;
 }

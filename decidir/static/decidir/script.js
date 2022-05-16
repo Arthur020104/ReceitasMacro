@@ -31,6 +31,7 @@ function fullpage(receita)
   {
     busca.style.display = "none";
   }
+  document.querySelector('.separation_border').style.display = 'none';
   document.querySelector('#receitas').style.display = 'none';
   let fullpage = document.querySelector('#fullpage');
   fullpage.style.display = 'block';
@@ -121,7 +122,7 @@ function alert(message)
   document.querySelector('#alert').appendChild(alerts);
 
   alerts.style.animationPlayState = 'running';
-  setTimeout(() => 
+  setTimeout(() =>
   {
     alerts.style.animationName = "hidealert";
     alerts.style.animationPlayState = 'running';
@@ -145,17 +146,17 @@ if(busca)
     {
       buscar();
     });
-    fetch('/busca', 
+    fetch('/busca',
     {
       method : 'POST',
       body: JSON.stringify(
       {
         content: busca.value,
-        filtro: filtro 
+        filtro: filtro
       })
     })
     .then(response => response.json())
-    .then(result => 
+    .then(result =>
     {
       let parent = document.getElementById('parent');
       parent.innerHTML = '';
@@ -173,13 +174,13 @@ if(busca)
           row.classList.add('row');
           x = row;
         }
-        if(localStorage.getItem("mode")=="light")
+        if(localStorage.getItem("mode")=="dark")
         {
-          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn">Ver receita</a></div></div></div>';
+          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body dark-mode-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn button-dark-mode">Ver receita</a></div></div></div>';
         }
         else
         {
-          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body dark-mode-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn button-dark-mode">Ver receita</a></div></div></div>';
+          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn">Ver receita</a></div></div></div>';
         }
       }
       parent.appendChild(x);
@@ -192,6 +193,15 @@ if(busca)
 let darkmode = document.querySelector("#darkmode");
 function dark()
 {
+  icons = document.querySelectorAll('button.icon');
+  icons.forEach(icon =>{
+    icon.classList.toggle('button-dark-mode');
+  });
+  const separation_border = document.querySelector(".separation_border");
+  if(separation_border)
+  {
+    document.querySelector(".separation_border").classList.toggle('separation_border-dark-mode');
+  }
   document.querySelector(".navbar-toggler").classList.toggle('toggler-icon-dark');
   document.querySelectorAll('.btn').forEach(btn =>{
     btn.classList.toggle('button-dark-mode');
@@ -270,7 +280,7 @@ if (message)
       {
         fetch(`https://api.edamam.com/api/nutrition-data?app_id=0e0efa68&app_key=%206106f458ccc594574d31692d70661790%09&nutrition-type=cooking&ingr=${foods[food]}`)
         .then(resp => resp.json())
-        .then(resp => 
+        .then(resp =>
         {
           if(resp)
           {
@@ -289,7 +299,7 @@ if (message)
               {
                 document.getElementById("nutricion").value = nutricion.calorias+","+nutricion.carboidratos+","+nutricion.proteinas+","+ nutricion.gorduras;/*
                 imgs = document.querySelector("#img_receita").value.split(',');
-                fetch('/receita', 
+                fetch('/receita',
                 {
                   method: 'POST',
                   body: JSON.stringify(
@@ -305,7 +315,7 @@ if (message)
                   })
                 })
                 .then(response => response.json())
-                .then(result => 
+                .then(result =>
                 {
                   // Print result
                   console.log(result);
@@ -328,7 +338,7 @@ if (message)
               if(e instanceof TypeError)
               {
                 let comida;
-                fetch('/tradutor', 
+                fetch('/tradutor',
                 {
                   method : 'POST',
                   body: JSON.stringify(
@@ -338,7 +348,7 @@ if (message)
                   })
                 })
                 .then(response => response.json())
-                .then(result => 
+                .then(result =>
                 {
                   console.log(result.traducao);
                   comida = result.traducao;
@@ -362,7 +372,7 @@ if (message)
     btn_tradutor.addEventListener('click', ()=>
     {
       let content = document.querySelector("#ingred");
-      fetch('/tradutor', 
+      fetch('/tradutor',
       {
         method : 'POST',
         body: JSON.stringify(
@@ -372,7 +382,7 @@ if (message)
         })
       })
       .then(response => response.json())
-      .then(result => 
+      .then(result =>
       {
         // Print result
         content.value = result.traducao;
@@ -387,7 +397,7 @@ if (message)
   {
     likes.forEach(like =>{
           like.style.animationPlayState = 'running';
-          like.addEventListener('click', () => 
+          like.addEventListener('click', () =>
           {
               like.style.animationName = 'hide';
               like.style.animationPlayState = 'running';
@@ -422,7 +432,6 @@ if (message)
 });
 function darkfull()
 {
-  console.log("aaaaaaaaaaaaaaaaaaaaaa");
   document.querySelectorAll('.recipe-info').forEach(recipe_info=>
     {
       recipe_info.classList.toggle('textarea-dark')
