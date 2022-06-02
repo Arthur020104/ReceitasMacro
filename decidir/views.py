@@ -10,17 +10,17 @@ from .models import User, receita, Img, Label
 import json
 from googletrans import Translator
 from datetime import datetime
+from PIL import Image
+from pathlib import Path
+import os
 
 def index(request):
     minute = int(datetime.now().strftime("%M"))
-    if minute % 5 == 0:
-         receitas = receita.objects.all().order_by('ingredientes')
-    else:
-        receitas = receita.objects.all().order_by('likes').reverse()
+    receitas = receita.objects.all().order_by('likes').reverse()
     for tms in receitas:
         tms.timestamp = datetime.fromtimestamp(float(tms.timestamp))
     p = Paginator(receitas,6)
-    page = request.GET.get('page')        
+    page = request.GET.get('page')
     receitass = p.get_page(page)
     return render(request,"decidir/index.html",{
         "receitas": receitass
@@ -39,7 +39,7 @@ def login_view(request):
         else:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
-    
+
     return render(request, "decidir/login.html")
 
 def register(request):
@@ -57,7 +57,7 @@ def register(request):
             return render(request, "decidir/register.html", {
                 "message": "Senhas precisam ser iguais."
             })
-        
+
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
@@ -67,7 +67,7 @@ def register(request):
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
-    
+
     return render(request, "decidir/register.html")
 @login_required
 def logout_view(request):
@@ -140,6 +140,7 @@ def create_recipe(request):
         recipe.save()
         for img in imgs:
             image = Img.objects.create(img = img)
+            convert_to_webp(Path(os.getcwd()+f"\media\images\{img.name}"))
             recipe.img.add(image)
         for label in my_lables:
             recipe.label.add(label)
@@ -188,7 +189,7 @@ def MinhasReceitas(request):
     for tms in receitas:
         tms.timestamp = datetime.fromtimestamp(float(tms.timestamp))
     p = Paginator(receitas,6)
-    page = request.GET.get('page')        
+    page = request.GET.get('page')
     receitass = p.get_page(page)
     return render(request,"decidir/Minhasreceitas.html",{
         "receitas": receitass
@@ -236,3 +237,11 @@ def buscar(request):
     return render(request, "decidir/busca.html",{
                 "labels":Label.objects.all()
             })
+
+
+def convert_to_webp(source):
+    """Convertendo imagem para Webp.
+    para eonomizar espaco de memoria
+    """
+    image = Image.open(source)  # Open image
+    image.save(source, format="webp")  # Convert image to webp

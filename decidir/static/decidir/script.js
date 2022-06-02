@@ -1,3 +1,5 @@
+import {criapizza} from './GraficoPizza.js'
+
 function cardbtn(cards_btn)
 {
   cards_btn.forEach(card=>
@@ -31,7 +33,11 @@ function fullpage(receita)
   {
     busca.style.display = "none";
   }
-  document.querySelector('.separation_border').style.display = 'none';
+  let separation_border = document.querySelector('.separation_border');
+  if(separation_border)
+  {
+    document.querySelector('.separation_border').style.display = 'none';
+  }
   document.querySelector('#receitas').style.display = 'none';
   let fullpage = document.querySelector('#fullpage');
   fullpage.style.display = 'block';
@@ -84,11 +90,17 @@ function fullpage(receita)
   {
     darkfull();
   }
+  let elemento = document.createElement('div');
+  elemento.classList.add('canvas');
+  let recipe_info = document.querySelector('.recipe-info');
+  recipe_info.appendChild(elemento);
+  criapizza([receita.carboidratos*4,receita.proteinas*4,receita.gorduras*9],elemento);
 }
 function alert(message)
 {
   let alerts = document.createElement("div");
   alerts.style.transition = '1.2s ease all';
+  let temp;
   if("error" in message)
   {
     alerts.classList.add('alert-danger', "alert");
@@ -134,7 +146,7 @@ function alert(message)
 }
 document.addEventListener('DOMContentLoaded',()=>{
 
-let busca = document.getElementById("busca")
+let busca = document.getElementById("busca");
 if(busca)
 {
   busca.addEventListener("keyup",function buscar(){
@@ -193,7 +205,7 @@ if(busca)
 let darkmode = document.querySelector("#darkmode");
 function dark()
 {
-  icons = document.querySelectorAll('button.icon');
+  let icons = document.querySelectorAll('button.icon');
   icons.forEach(icon =>{
     icon.classList.toggle('button-dark-mode');
   });
@@ -263,13 +275,11 @@ if (message)
   alert({"error":message.innerHTML})
 }
 
-  //document.querySelector('#fullpage').style.display = 'none';
   let recipebtn = document.querySelector("#recipe-make");
 
   if (recipebtn)
   {
     let content = document.querySelector("#ingred");
-    //recipebtn.addEventListener('click',
     function click()
     {
       let foods = content.value.split('\n');
@@ -286,10 +296,6 @@ if (message)
           {
             try
             {
-              //console.log("calorias:"+resp.calories);
-              //console.log("carb"+resp['totalNutrients'].CHOCDF.quantity);
-              //console.log("proteina"+resp['totalNutrients'].PROCNT.quantity);
-              //console.log("gorduras"+resp['totalNutrients'].FAT.quantity);
               nutricion.calorias += resp.calories;
               nutricion.carboidratos += resp['totalNutrients'].CHOCDF.quantity;
               nutricion.proteinas += resp['totalNutrients'].PROCNT.quantity;
@@ -297,38 +303,7 @@ if (message)
               counter++;
               if(foods.length == counter)
               {
-                document.getElementById("nutricion").value = nutricion.calorias+","+nutricion.carboidratos+","+nutricion.proteinas+","+ nutricion.gorduras;/*
-                imgs = document.querySelector("#img_receita").value.split(',');
-                fetch('/receita',
-                {
-                  method: 'POST',
-                  body: JSON.stringify(
-                  {
-                    name : document.querySelector("#nome_receita").value,
-                    imgs : imgs,
-                    modopreparo : document.querySelector("#modopreparo_receita").value,
-                    calorias: nutricion.calorias,
-                    carboidratos: nutricion.carboidratos,
-                    proteinas: nutricion.proteinas,
-                    gorduras: nutricion.gorduras,
-                    foods: foods
-                  })
-                })
-                .then(response => response.json())
-                .then(result =>
-                {
-                  // Print result
-                  console.log(result);
-                  if("error" in result)
-                  {
-                    alert(result);
-                  }
-                  else
-                  {
-                    window.location.replace("/");
-                  }
-                });
-                */
+                document.getElementById("nutricion").value = nutricion.calorias+","+nutricion.carboidratos+","+nutricion.proteinas+","+ nutricion.gorduras;
               }
             }
             catch(e)
@@ -366,7 +341,7 @@ if (message)
 
     }
   }
-  btn_tradutor = document.getElementById('btn_traduzir');
+  let btn_tradutor = document.getElementById('btn_traduzir');
   if(btn_tradutor)
   {
     btn_tradutor.addEventListener('click', ()=>
@@ -392,7 +367,7 @@ if (message)
     });
 
   }
-  likes = document.querySelectorAll('.like');
+  let likes = document.querySelectorAll('.like');
   if(likes)
   {
     likes.forEach(like =>{
