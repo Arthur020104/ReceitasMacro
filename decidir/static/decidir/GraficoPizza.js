@@ -2,6 +2,10 @@ import 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js';
 
 export function criapizza(dado,elementappend)
 {
+  for(let i = 0; i < dado.length;i++)
+  {
+    dado[i] = dado[i].toFixed(2)
+  }
   //const Chart = require('chart.js');
   let canvas = document.createElement('canvas');
   let title = document.createElement('h3');
@@ -22,8 +26,8 @@ export function criapizza(dado,elementappend)
         borderColor:'transparent',
         backgroundColor: [
           'rgb(77, 77, 186)',
-          'rgb(170, 255, 0)',
-          'rgb(255, 191, 0)'
+          'rgb(200, 255, 9)',
+          'rgb(253, 200, 9)'
         ],
         hoverOffset: 4,
         

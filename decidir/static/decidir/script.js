@@ -95,6 +95,7 @@ function fullpage(receita)
   let recipe_info = document.querySelector('.recipe-info');
   recipe_info.appendChild(elemento);
   criapizza([receita.carboidratos*4,receita.proteinas*4,receita.gorduras*9],elemento);
+  document.getElementById('Logo').scrollIntoView({behavior: "smooth"});
 }
 function alert(message)
 {
@@ -176,8 +177,10 @@ if(busca)
       let contentdis = document.createElement('div');
       contentdis.classList.add('row');
       let x = contentdis;
-      for(results in result)
+      //results in result
+      for(let i = 0; i < result.length;i++)
       {
+        let results = i;
         counter++;
         if(counter % 3 == 0)
         {

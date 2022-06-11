@@ -203,7 +203,7 @@ def buscar(request):
         filtro = data.get("filtro","")
         if filtro != "Filtros":
             filtro = Label.objects.get(pk=filtro).id
-        receitas = receita.objects.filter(name__contains=content)
+        receitas = receita.objects.filter(name__icontains=content)
         receitar = []
         for recepi in receitas:
             filtros = []
