@@ -74,14 +74,12 @@
             {% define forloop.counter|slugify as counter %}
             <div class="card" style="width: 18rem;">
                 {% if not "/media/images/" in receita.img.all.first.img.url %}
-                    <img class="card-img" src="{{receita.img.all.first.img}}" alt="{{receita.name}}">
+                    <img data-id_receita="{{receita.id}}" class="card-img cards_btn" src="{{receita.img.all.first.img}}" alt="{{receita.name}}">
                 {% else %}
-                    <img class="card-img" src="{{receita.img.all.first.img.url}}" alt="{{receita.name}}">
+                    <img data-id_receita="{{receita.id}}" class="card-img cards_btn" src="{{receita.img.all.first.img.url}}" alt="{{receita.name}}">
                 {% endif %}
                 <div class="card-body">
-                <h5 class="card-title">{{receita.name}}</h5>
-                <p class="card-text">{{receita.ingredientes}}</p>
-                <p class="card-text">{{receita.timestamp}}</p>
+                <h5 data-id_receita="{{receita.id}}" class="card-title cards_btn">{{receita.name}}</h5>
                 {% if request.user in receita.likes.all %}
                 <div><button class="icon"><i id="like{{receita.id}}" data-receita_id="{{receita.id}}" class="fa-solid fa-heart like"></i></button><b>{{receita.likes.all.count}}</b></div>
                 {% elif receita.sender == request.user %}
@@ -91,7 +89,6 @@
                 {% else %}
                 <div><button class="icon"><i id="like{{receita.id}}" data-receita_id="{{receita.id}}" class="fa-regular fa-heart like"></i></button><b>{{receita.likes.all.count}}</b></div>
                 {% endif %}
-                <a data-id_receita="{{receita.id}}" class="cards_btn btn">Ver receita</a>
                 </div>
             </div>
         </div>

@@ -73,19 +73,26 @@ span
 {
     color: #4d4Dba!important;
 }
+
 .cards_btn
-{
+{/*
     background-color: #4d4Dba!important;
     color: #fff!important;
+    */
+    text-align: center;
     outline: none!important;
-    transition: color .25s ease-in-out,background-color .25s ease-in-out,border-color .25s ease-in-out,box-shadow .25s ease-in-out!important;
+    transition: color .25s ease-in-out,background-color .25s ease-in-out,border-color .25s ease-in-out,box-shadow .25s ease-in-out,font-size .45s ease-in-out!important;
 }
 .cards_btn:hover
 {
+    /*
     background-color: #fff!important;
-    color: #4d4Dba!important;
-    border-color: #4d4Dba!important;
+    */
+    color: #3c3ca9!important;
+    font-size: 1.269rem;
+    /*border-color: #3c3ca9!important;
     outline: none!important;
+    */
     cursor: pointer;
 
 }
@@ -118,9 +125,8 @@ span
     animation-play-state: running;
     outline: none!important;
     background-color: #fff;
-    border: none;
-    color: #4d4Dba;
-    border-color: #4d4Dba;
+    border: none!important;
+    color: #2b2b98;
     border: 1px solid;
     border-radius: 4px;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -128,8 +134,7 @@ span
 
 .icon:hover
 {
-    background-color: #4d4Dba;
-    color: #fff;
+    color: #6f6fdc;
 }
 .like
 {
@@ -239,8 +244,14 @@ span
 {
     margin: auto!important;
 }
+.card
+{
+    border: 0px!important;
+}
 .card-img
 {
+    border-bottom: 3.5px solid #5e5ecb;
+    border-radius: 0!important;
     height: 100%!important;
     width: 100%!important;
 }

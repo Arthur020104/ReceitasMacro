@@ -191,11 +191,11 @@ if(busca)
         }
         if(localStorage.getItem("mode")=="dark")
         {
-          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body dark-mode-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn button-dark-mode">Ver receita</a></div></div></div>';
+          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img data-id_receita="'+result[results].id+'" class="card-img cards_btn" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body dark-mode-body"><h5 data-id_receita="'+result[results].id+'" class="card-title cards_btn">'+result[results].name+'</h5></div></div></div>';
         }
         else
         {
-          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img class="card-img" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body"><h5 class="card-title">'+result[results].name+'</h5><p class="card-text">'+result[results].ingredientes+'</p><p class="card-text">'+result[results].timestamp+'</p><a data-id_receita="'+result[results].id+'" class="cards_btn btn">Ver receita</a></div></div></div>';
+          x.innerHTML += '<div class="col-lg-3"><div class="card" style="width: 18rem;"><img data-id_receita="'+result[results].id+'" class="card-img cards_btn" src="'+result[results].img[0]+'" alt='+result[results].name+'><div class="card-body"><h5 data-id_receita="'+result[results].id+'" class="card-title cards_btn">'+result[results].name+'</h5></div></div></div>';
         }
       }
       parent.appendChild(x);
