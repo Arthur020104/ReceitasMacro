@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-llunc&4$j=j%6hk6-thdzgf76t0ab@)wfjb^-8+s5(fy^)f)oi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['receitasmacro.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['receitasmacro.herokuapp.com','127.0.0.1','arthur020104.pythonanywhere.com']
 
 
 # Application definition
