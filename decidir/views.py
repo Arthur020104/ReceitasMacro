@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from email import message
+from django.shortcuts import render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -144,7 +145,7 @@ def create_recipe(request):
             recipe.img.add(image)
         for label in my_lables:
             recipe.label.add(label)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("MinhasReceitas"))
     else:
         if request.user.id:
             label = Label.objects.all()
@@ -184,15 +185,18 @@ def likes(request):
     return HttpResponse(401)
 
 @login_required
-def MinhasReceitas(request):
+def MinhasReceitas(request,*args):
+    message = None
+    if args:
+        message = {'msg':args[0],'role':args[1]}
     receitas = receita.objects.filter(sender = request.user).order_by('timestamp').reverse()
     for tms in receitas:
         tms.timestamp = datetime.fromtimestamp(float(tms.timestamp))
-    p = Paginator(receitas,6)
+    p = Paginator(receitas,4)
     page = request.GET.get('page')
     receitass = p.get_page(page)
     return render(request,"decidir/Minhasreceitas.html",{
-        "receitas": receitass
+        "receitas": receitass,'mesage':message
     })
 
 @csrf_exempt
@@ -245,3 +249,22 @@ def convert_to_webp(source):
     """
     image = Image.open(source)  # Open image
     image.save(source, format="webp")  # Convert image to webp
+
+#@login_required
+def delreceita(request,id):
+    Receita = get_object_or_404(receita,pk=id)
+    if Receita.sender == request.user:
+        imgs = Receita.img.all()
+        for img in imgs:
+            if img.img.url:
+                #print(Path(os.getcwd()+img.img.url))
+                try:
+                    os.remove(Path(os.getcwd()+img.img.url))
+                except:
+                    print("An exception occurred")
+            img.delete()
+        Receita.delete()
+        print(reverse('MinhasReceitas'))
+        return MinhasReceitas(request,'Receita deletada com sucesso','warning')
+    else:
+        return HttpResponseRedirect(reverse('index'))
