@@ -1,0 +1,54 @@
+{% extends "ReceitasMacro/layout.html" %}
+{% block title %}Criar receita{% endblock %}
+{% block body %}
+    {% if message %}
+        <div id="message" style="display: none;">{{ message }}</div>
+    {% endif %}
+    <h2 class="text-center title">Criar receita</h2>
+    <form enctype="multipart/form-data" method="post" action="{%url 'editaReceita' receita.id%}">
+        {%csrf_token%}
+        <div class="container text-center">
+            <div class="form-group">
+                <input id="nome_receita" autocomplete="off" class="form-control" autofocus type="text" value="{{receita.name}}" name="name" placeholder="Nome da Receita">
+            </div>
+            <div class="form-check center">
+                <h5>Categorias:</h5>
+                {% for label in labels %}
+                        <div>
+                            {%if label in receita.label.all%}
+                                <input checked name="{{label.name}}" class="form-check-input" type="checkbox" value="{{label.id}}" id="{{label.id}}">
+                            {%else%}
+                                <input name="{{label.name}}" class="form-check-input" type="checkbox" value="{{label.id}}" id="{{label.id}}">
+                            {%endif%}
+                            <label class="form-check-label" for="flexCheckDefault">
+                            {{label.name}}
+                            </label>
+                        </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <p>Após especificar os ingredientes aperte no botão <i class="color">traduzir</i> antes de enviar.</p>
+                <p>Especificar em cada linha apenas um ingrediente.</p>
+                <p>OBS:Todo ingrediente a gosto especificar apenas no modo de preparo.</p>
+                <textarea name="foods" id="ingred" autocomplete="off" class="form-control textarea" rows="5" placeholder="Ingredientes"  type="text" autocomplete="off">{{receita.rawingredientes_pt}}</textarea>
+            </div>
+            <button type="button" id="btn_traduzir" class="btn btns_macro">Traduzir</button>
+            <div class="form-group">
+                <textarea name="modopreparo" autocomplete="off" id="modopreparo_receita" class="form-control textarea" rows="5" placeholder="Modo de Preparo"  type="text" autocomplete="off">{{receita.modoPreparo}}</textarea>
+            </div>
+            <input type="hidden" name="nutricion" id="nutricion">
+            <div class="form-group">
+                {% if not "/media/images/" in receita.img.all.first.img.url %}
+                    <img style="width: 45vw!important;margin-top: 10px;margin-bottom: 10px;"  class="card-img" src="{{receita.img.all.first.img}}" alt="{{receita.name}}">
+                {%else%}
+                    <img style="width: 45vw!important;margin-top: 10px;margin-bottom: 10px;" class="card-img" src="{{receita.img.all.first.img.url}}" alt="{{receita.name}}">
+                {%endif%}
+                <div class="custom-file">
+                    <input type="file" name="images" id="files" multiple class="custom-file-input">
+                    <label class="custom-file-label form-control" for="customFile">Choose file</label>
+                  </div>
+            </div>
+            <input id="recipe-make" type="submit" value="Finalizar" class="btn">
+        </div>
+    </form>
+{% endblock %}

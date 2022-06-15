@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['receitasmacro.herokuapp.com','127.0.0.1','arthur020104.pythona
 # Application definition
 
 INSTALLED_APPS = [
-    'decidir',
+    'ReceitasMacro',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,7 +84,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = "decidir.User"
+AUTH_USER_MODEL = "ReceitasMacro.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
