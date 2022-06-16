@@ -57,6 +57,8 @@ export function click(content)
         }
         }
     });
+
     }
+    return document.getElementById("recipe-make").disabled = false;
 
 }

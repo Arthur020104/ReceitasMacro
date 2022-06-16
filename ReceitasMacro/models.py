@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator
 from datetime import datetime
 
 # Create your models here.
 class User(AbstractUser):
+    class Meta:
+        app_label = 'ReceitasMacro'
     pass
 class Img(models.Model):
     img = models.ImageField(null=False,blank=False, upload_to="images/")
@@ -51,5 +53,5 @@ class receita(models.Model):
             "modoPreparo": self.modoPreparo
         }
 class Meta:
-        app_label = 'ReceitaMacro' 
+        app_label = 'ReceitaMacro'
 
