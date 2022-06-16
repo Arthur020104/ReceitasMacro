@@ -2,10 +2,11 @@ import {alert} from './script.js'
 export function click(content)
 {
     let foods = content.value.split('\n');
-    for(let food=0; food< foods.length;food++){foods[food] = foods[food].trim()}
-    let nutricion = {"calorias": 0, "carboidratos":0, "proteinas": 0, "gorduras":0};
     let counter = 0;
+    for(let food=0; food< foods.length;food++){foods[food] = foods[food].trim(); counter += food}
+    let nutricion = {"calorias": 0, "carboidratos":0, "proteinas": 0, "gorduras":0};
     alert({"loading":"Carregando..."})
+    let test = 0;
     for(let food=0; food< foods.length;food++)
     {
     fetch(`https://api.edamam.com/api/nutrition-data?app_id=0e0efa68&app_key=%206106f458ccc594574d31692d70661790%09&nutrition-type=cooking&ingr=${foods[food]}`)
@@ -16,14 +17,17 @@ export function click(content)
         {
         try
         {
+            test += food
+            console.log(test, counter)
             nutricion.calorias += resp.calories;
             nutricion.carboidratos += resp['totalNutrients'].CHOCDF.quantity;
             nutricion.proteinas += resp['totalNutrients'].PROCNT.quantity;
             nutricion.gorduras +=  resp['totalNutrients'].FAT.quantity;
-            counter++;
-            if(foods.length == food+1)
+            if(test == counter)
             {
+                document.body.style.cursor = 'default';
                 document.getElementById("nutricion").value = nutricion.calorias+","+nutricion.carboidratos+","+nutricion.proteinas+","+ nutricion.gorduras;
+                return document.getElementById("recipe-make").disabled = false;
             }
         }
         catch(e)
@@ -58,5 +62,4 @@ export function click(content)
         }
     });
     }
-
 }

@@ -294,6 +294,8 @@ if (message)
   {
     btn_tradutor.addEventListener('click', ()=>
     {
+      document.body.style.cursor = 'wait';
+      document.getElementById("recipe-make").disabled = true;
       let content = document.querySelector("#ingred");
       fetch('/tradutor',
       {
@@ -310,6 +312,7 @@ if (message)
         // Print result
         content.value = result.traducao;
         click(content);
+        //document.getElementById("recipe-make").onclick = function() {this.disabled = false;}
         //console.log(result.traducao);
       });
     });
