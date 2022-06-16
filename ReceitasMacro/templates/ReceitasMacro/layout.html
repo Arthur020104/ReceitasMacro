@@ -28,6 +28,9 @@
                 {% if user.is_authenticated %}
                   <a class="nav-item nav-link" href="{% url 'MinhasReceitas' %}">MinhasReceitas</a>
                   <a class="nav-item nav-link" href="{% url 'recipe' %}">Criar receita</a>
+                  {% if user.is_superuser %}
+                    <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
+                  {% endif %}
                   <a class="nav-item nav-link" href="{% url 'logout' %}">Log Out</a>
                 {% else %}
                     <a class="nav-item nav-link" href="{% url 'login' %}">Log in</a>

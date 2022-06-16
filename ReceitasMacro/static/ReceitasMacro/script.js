@@ -120,8 +120,8 @@ export function alert(message)
   {
     alerts.classList.add('alert-loding', "alert");
     alerts.innerHTML = message['loading'];
-    alerts.animationDuration = 1500;
-    temp = 1700;
+    alerts.animationDuration = 4000;
+    temp = 5000;
   }
   else
   {
@@ -287,13 +287,14 @@ if (message)
   if (recipebtn)
   {
     let content = document.querySelector("#ingred");
-
+    
   }
   let btn_tradutor = document.getElementById('btn_traduzir');
   if(btn_tradutor)
   {
     btn_tradutor.addEventListener('click', ()=>
     {
+      document.body.style.cursor = 'wait';
       document.getElementById("recipe-make").disabled = true;
       let content = document.querySelector("#ingred");
       fetch('/tradutor',
@@ -311,6 +312,7 @@ if (message)
         // Print result
         content.value = result.traducao;
         click(content);
+        //document.getElementById("recipe-make").onclick = function() {this.disabled = false;}
         //console.log(result.traducao);
       });
     });
