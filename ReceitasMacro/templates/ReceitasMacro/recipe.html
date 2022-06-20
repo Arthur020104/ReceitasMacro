@@ -32,11 +32,14 @@
                 <p>Após especificar os ingredientes aperte no botão <i class="color">traduzir</i> antes de enviar.</p>
                 <p>Especificar em cada linha apenas um ingrediente.</p>
                 <p>OBS:Todo ingrediente a gosto especificar apenas no modo de preparo.</p>
-                <textarea name="foods" id="ingred" autocomplete="off" class="form-control textarea" rows="5" placeholder="Ingredientes"  type="text" autocomplete="off"></textarea>
+                <textarea name="foods" id="ingred" autocomplete="off" class="form-control textarea" rows="5" placeholder='Ingredientes:&#10;100g de peito de frango&#10;100g de arroz cozido'  type="text" autocomplete="off"></textarea>
             </div>
             <button type="button" id="btn_traduzir" class="btn btns_macro">Traduzir</button>
             <div class="form-group">
-                <textarea name="modopreparo" autocomplete="off" id="modopreparo_receita" class="form-control textarea" rows="5" placeholder="Modo de Preparo"  type="text" autocomplete="off"></textarea>
+                <input required name="rendimento" autocomplete="off" id="rendimento" class="form-control textarea" placeholder="Rendimento"  type="text" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <textarea required name="modopreparo" autocomplete="off" id="modopreparo_receita" class="form-control textarea" rows="5" placeholder="Modo de Preparo"  type="text" autocomplete="off"></textarea>
             </div>
             <input type="hidden" name="nutricion" id="nutricion">
             <input id="recipe-make" type="submit" value="Finalizar" class="btn">

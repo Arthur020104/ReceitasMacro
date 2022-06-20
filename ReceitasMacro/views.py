@@ -1,4 +1,3 @@
-from email import message
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -17,7 +16,9 @@ import os
 
 def index(request):
     minute = int(datetime.now().strftime("%M"))
-    receitas = receita.objects.all().order_by('likes').reverse()
+    #
+    receitas = receita.objects.filter(public=True).order_by('likes').reverse()
+    #
     for tms in receitas:
         tms.timestamp = datetime.fromtimestamp(float(tms.timestamp))
     p = Paginator(receitas,6)
@@ -77,7 +78,14 @@ def logout_view(request):
 
 def info(request, content, id):
     if content == "receita":
-        recipe = receita.objects.get(pk=id)
+        #
+        Receita = receita.objects.get(pk=id)
+        if not request.user == Receita.sender:
+            recipe = receita.objects.get(pk=id,public=True)
+        else:
+            recipe = Receita
+        #
+        #recipe = receita.objects.get(pk=id,public=True)
         if not id:
             return JsonResponse(
                 {
@@ -114,8 +122,14 @@ def create_recipe(request):
         imgs = request.FILES.getlist('images')
         name = request.POST["name"]
         modoPreparo = request.POST["modopreparo"]
+        #
+        rendimento = request.POST["rendimento"]
+        #
         nutricion = nutricion.split(",")
-        if not nutricion or not foods or not imgs or not name:
+        
+        #
+        if not nutricion or not foods or not imgs or not name or not rendimento:
+        #
             return render(request, "ReceitasMacro/recipe.html", {
                 "message": "Todos os campos precisam ser preenchidos.",
                 "labels": Label.objects.all()
@@ -138,7 +152,9 @@ def create_recipe(request):
                 comidas += '.'
             elif i != (len(translations)-2):
                 comidas += ', '
-        recipe = receita.objects.create(name = name, ingredientes = comidas, calorias = calorias, carboidratos = carboidratos, proteinas = proteinas, gorduras = gorduras, timestamp = datetime.timestamp(datetime.now()), sender = request.user,modoPreparo = modoPreparo,rawingredientes_pt = rawingredientes)
+        #
+        recipe = receita.objects.create(name = name, ingredientes = comidas, calorias = calorias, carboidratos = carboidratos, proteinas = proteinas, gorduras = gorduras, timestamp = datetime.timestamp(datetime.now()), sender = request.user,modoPreparo = modoPreparo,rawingredientes_pt = rawingredientes, rendimento = rendimento)
+        #
         recipe.save()
         for img in imgs:
             image = Img.objects.create(img = img)
@@ -208,7 +224,9 @@ def buscar(request):
         filtro = data.get("filtro","")
         if filtro != "Filtros":
             filtro = Label.objects.get(pk=filtro).id
-        receitas = receita.objects.filter(name__icontains=content)
+        #
+        receitas = receita.objects.filter(name__icontains=content, public=True)
+        #
         receitar = []
         for recepi in receitas:
             filtros = []
@@ -284,6 +302,9 @@ def editreceita(request,id):
         imgs = request.FILES.getlist('images')
         name = request.POST["name"]
         modoPreparo = request.POST["modopreparo"]
+        #
+        rendimento = request.POST["rendimento"]
+        #
         nutricion = nutricion.split(",")
         if not nutricion or not foods or not name:
             return render(request, "ReceitasMacro/editReceita.html", {
@@ -307,6 +328,7 @@ def editreceita(request,id):
                 comidas += ', '
         Receita.name = name
         if not rawingredientes_pt == Receita.rawingredientes_pt:
+            Receita.rawingredientes_pt = rawingredientes_pt
             calorias = float(nutricion[0])
             carboidratos = float(nutricion[1])
             proteinas = float(nutricion[2])
@@ -316,6 +338,9 @@ def editreceita(request,id):
             Receita.carboidratos = carboidratos
             Receita.proteinas = proteinas
             Receita.gorduras = gorduras
+        #
+        Receita.rendimento = rendimento
+        #
         Receita.timestamp = datetime.timestamp(datetime.now())
         Receita.modoPreparo = modoPreparo
         if imgs:
