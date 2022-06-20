@@ -23,6 +23,9 @@ class receita(models.Model):
     name = models.CharField(max_length=80)
     img = models.ManyToManyField(Img,blank=True,related_name="imgs")
     ingredientes = models.CharField(max_length=800)
+    #
+    rendimento = models.CharField(max_length=50)
+    #
     calorias = models.FloatField(validators=[MinValueValidator(100)])
     carboidratos = models.FloatField()
     proteinas = models.FloatField()
@@ -33,6 +36,9 @@ class receita(models.Model):
     sender = models.ForeignKey(User, on_delete=models.PROTECT, related_name="sender")
     modoPreparo = models.CharField(max_length=3000)
     label = models.ManyToManyField(Label,blank=True,related_name="receita")
+    #
+    public = models.BooleanField(default=False)
+    #
 
     def __str__(self):
         return f"{self.id}: {self.name}| Sender: {self.sender.username}"
@@ -50,8 +56,12 @@ class receita(models.Model):
             "timestamp": timestamp,
             "likes": self.likes.all().count(),
             "sender": self.sender.username,
-            "modoPreparo": self.modoPreparo
+            "modoPreparo": self.modoPreparo,
+            #
+            "rendimento": self.rendimento
+            #
         }
 class Meta:
         app_label = 'ReceitaMacro'
+
 

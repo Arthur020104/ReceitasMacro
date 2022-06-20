@@ -210,12 +210,11 @@ span
     background-color: #fff;
     padding: 10px!important;
     width: auto!important;
-    border-radius: 8px;
 }
 .row-full
 {
     width: 80%;
-    margin-left: 17%!important;
+    /*margin-left: 17%!important;*/
 }
 .color
 {
@@ -328,7 +327,7 @@ span
     }
 
 }
-@media (max-width:500px)
+@media (max-width:570px) 
 {
     .coluna-full
     {
@@ -341,6 +340,7 @@ span
     .row-full
     {
         margin-top: 10px!important;
+        margin-left: 16.5%!important;
     }
     .col-lg-3
     {
@@ -348,7 +348,25 @@ span
         margin-left: 9%!important;
     }
 }
-@media (max-width:1920px) and (min-width:570px)
+@media (max-width:992px) and (min-width:570px)
+{
+    .coluna-full
+    {
+        display:table!important;
+        width: 100%!important;
+        padding:15px!important;
+        margin-right: auto!important;
+        margin-bottom: 10px!important;
+    }
+    .row-full
+    {
+        display: flex!important;
+        margin-top: 10px!important;
+        width: 100%!important;
+        margin-left:.38vw!important;
+    }
+}
+@media (max-width:1920px) and (min-width:992px)
 {
     .coluna-full
     {
@@ -359,10 +377,9 @@ span
     .row-full
     {
         display: flex!important;
-        margin:0!important;
         margin-top: 10px!important;
         width: 103%!important;
-        margin-left:7%!important;
+        margin-left:4.0vw!important;
     }
 }
 .alert-loding
@@ -458,7 +475,12 @@ span
 {
     background-color: #000!important;
 }
-.col-sm-2-black
+.col-sm-2
+{
+    width: 14.666667%!important;
+    flex: 0 0 14.666667%!important;
+}
+.col-sm-black
 {
     background-color: #212121!important;
 }
@@ -482,7 +504,7 @@ select {
     -webkit-border-radius:25px; -moz-border-radius:25px; border-radius:25px;
 }
 
-select:hover {
+select:hover {    
     background-color:gren;
 }
 .dropdown
@@ -520,7 +542,7 @@ select:hover {
         width: 100%!important;
         height: 40vh!important;
     }
-
+    
 
 }
 @media (max-width:1000px) and (min-width:500px)

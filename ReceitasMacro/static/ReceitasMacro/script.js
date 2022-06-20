@@ -83,7 +83,7 @@ function fullpage(receita)
     }
   }
 
-  container_page.innerHTML= "<div class='recipe-info text-center'><h3 class='title-full text-center color'>"+receita.name+"</h3>"+carousel+"<div class='row row-full'><div class='col-sm-2 coluna-full'><p class='text-center color'>Calorias</p><p class='text-center'>"+Number((receita.calorias).toFixed(1))+"</p></div><div class='col-sm-2 coluna-full'><p class='text-center color'>Carboidratos</p><p class='text-center'>"+Number((receita.carboidratos).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Proteínas</p><p class='text-center'>"+Number((receita.proteinas).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Gorduras</p><p class='text-center'>"+Number((receita.gorduras).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'><i  class='fa-solid fa-heart like color'></i></p><p class='text-center'>"+receita.likes+"</p></div></div></div>";
+  container_page.innerHTML= "<div class='recipe-info text-center'><h3 class='title-full text-center color'>"+receita.name+"</h3>"+carousel+"<div class='row row-full'><div class='col-sm-2 coluna-full'><p class='text-center color'>Calorias</p><p class='text-center'>"+Number((receita.calorias).toFixed(1))+"</p></div><div class='col-sm-2 coluna-full'><p class='text-center color'>Carboidratos</p><p class='text-center'>"+Number((receita.carboidratos).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Proteínas</p><p class='text-center'>"+Number((receita.proteinas).toFixed(1))+"g</p></div><div class='coluna-full col-sm-2'><p class='text-center color'>Gorduras</p><p class='text-center'>"+Number((receita.gorduras).toFixed(1))+"g</p></div><div class='col-sm-2 coluna-full'><p class='text-center color'>Rendimento</p><p class='text-center'>"+receita.rendimento+"</p></div><div class='coluna-full col-sm-2'><p class='text-center color'><i  class='fa-solid fa-heart like color'></i></p><p class='text-center'>"+receita.likes+"</p></div></div></div>";
   ingredientes.innerHTML = "<div class='ingrdients-info text-center'><h3 class='title-full text-center color'>Ingredientes <i class='fa-solid fa-cart-shopping color'></i></h3><p class='text-center text'>"+receita.ingredientes+"</p></div>";
   modopreparo.innerHTML = "<div class='ingrdients-info text-center'><h3 class='title-full text-center color'>Modo de preparo<i class='fa-solid fa-kitchen-set'></i></h3><p class='text-center text'>"+receita.modoPreparo+"</p></div>";
   if(localStorage.getItem("mode")=="dark")
@@ -97,8 +97,10 @@ function fullpage(receita)
   let sender = document.createElement("div");
   sender.innerHTML = "<p class='text-right'><b class='color'> - </b>Criador: "+receita.sender+"</p>";
   recipe_info.appendChild(sender);
-  criapizza([receita.carboidratos*4,receita.proteinas*4,receita.gorduras*9],elemento);
+  let total = receita.carboidratos*4 + receita.proteinas*4 + receita.gorduras*9
+  criapizza([((receita.carboidratos*4)*100)/total,((receita.proteinas*4)*100)/total,((receita.gorduras*9)*100)/total],elemento);
   document.getElementById('Logo').scrollIntoView({behavior: "smooth"});
+  resizefullpage(window.innerWidth);
 }
 export function alert(message)
 {
@@ -290,7 +292,7 @@ if (message)
   if (recipebtn)
   {
     let content = document.querySelector("#ingred");
-
+    
   }
   let btn_tradutor = document.getElementById('btn_traduzir');
   if(btn_tradutor)
@@ -369,8 +371,51 @@ function darkfull()
     {
       ingredientes_info.classList.toggle('textarea-dark')
     });
-  document.querySelectorAll('.col-sm-2').forEach(col=>
+  let col_2 = document.querySelectorAll('.col-sm-2');
+  let col_4 = document.querySelectorAll('.col-sm-4');
+  if(col_2)
+  {
+    col_2.forEach(col=>
+      {
+        col.classList.toggle('col-sm-black')
+      });
+  }
+  if(col_4)
+  {
+    col_4.forEach(col=>
+      {
+        col.classList.toggle('col-sm-black')
+      });
+  }
+}
+window.addEventListener('resize', function(event){
+  let newWidth = window.innerWidth;
+  resizefullpage(newWidth)
+});
+function resizefullpage(newWidth)
+{
+  if(newWidth <= 991 && newWidth > 0)
+  {
+    let col_2 = document.querySelectorAll('.col-sm-2');
+    if(col_2)
     {
-      col.classList.toggle('col-sm-2-black')
-    });
+      col_2.forEach(col=>
+        {
+          col.classList.add('col-sm-4');
+          col.classList.remove('col-sm-2');
+        });
+      }
+  }
+  else
+  {
+    let col_4 = document.querySelectorAll('.col-sm-4');
+    if(col_4)
+    {
+      col_4.forEach(col=>
+        {
+          col.classList.add('col-sm-2');
+          col.classList.remove('col-sm-4');
+        });
+    }
+  }
 }
