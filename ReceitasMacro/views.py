@@ -16,14 +16,13 @@ import os
 
 def index(request):
     minute = int(datetime.now().strftime("%M"))
-    #
     receitas = receita.objects.filter(public=True).order_by('likes').reverse()
-    #
     for tms in receitas:
         tms.timestamp = datetime.fromtimestamp(float(tms.timestamp))
     p = Paginator(receitas,6)
     page = request.GET.get('page')
     receitass = p.get_page(page)
+    print(Path(os.getcwd()))
     return render(request,"ReceitasMacro/index.html",{
         "receitas": receitass
     })
@@ -78,14 +77,11 @@ def logout_view(request):
 
 def info(request, content, id):
     if content == "receita":
-        #
         Receita = receita.objects.get(pk=id)
         if not request.user == Receita.sender:
             recipe = receita.objects.get(pk=id,public=True)
         else:
             recipe = Receita
-        #
-        #recipe = receita.objects.get(pk=id,public=True)
         if not id:
             return JsonResponse(
                 {
@@ -122,14 +118,9 @@ def create_recipe(request):
         imgs = request.FILES.getlist('images')
         name = request.POST["name"]
         modoPreparo = request.POST["modopreparo"]
-        #
         rendimento = request.POST["rendimento"]
-        #
         nutricion = nutricion.split(",")
-        
-        #
         if not nutricion or not foods or not imgs or not name or not rendimento:
-        #
             return render(request, "ReceitasMacro/recipe.html", {
                 "message": "Todos os campos precisam ser preenchidos.",
                 "labels": Label.objects.all()
@@ -152,13 +143,11 @@ def create_recipe(request):
                 comidas += '.'
             elif i != (len(translations)-2):
                 comidas += ', '
-        #
-        recipe = receita.objects.create(name = name, ingredientes = comidas, calorias = calorias, carboidratos = carboidratos, proteinas = proteinas, gorduras = gorduras, timestamp = datetime.timestamp(datetime.now()), sender = request.user,modoPreparo = modoPreparo,rawingredientes_pt = rawingredientes, rendimento = rendimento)
-        #
+        recipe = recipe = receita.objects.create(name = name, ingredientes = comidas, calorias = calorias, carboidratos = carboidratos, proteinas = proteinas, gorduras = gorduras, timestamp = datetime.timestamp(datetime.now()), sender = request.user,modoPreparo = modoPreparo,rawingredientes_pt = rawingredientes, rendimento = rendimento)
         recipe.save()
         for img in imgs:
             image = Img.objects.create(img = img)
-            convert_to_webp(Path(os.getcwd()+f"\media\images\{img.name}"))
+            convert_to_webp(Path(os.getcwd()+f"/ReceitasMacro/media/images/{img.name}"))
             recipe.img.add(image)
         for label in my_lables:
             recipe.label.add(label)
@@ -224,9 +213,8 @@ def buscar(request):
         filtro = data.get("filtro","")
         if filtro != "Filtros":
             filtro = Label.objects.get(pk=filtro).id
-        #
+
         receitas = receita.objects.filter(name__icontains=content, public=True)
-        #
         receitar = []
         for recepi in receitas:
             filtros = []
@@ -273,12 +261,12 @@ def convert_to_webp(source):
 def delreceita(request,id):
     Receita = get_object_or_404(receita,pk=id)
     if Receita.sender == request.user:
-        imgs = Receita.img.all()
-        for img in imgs:
+        imgs1 = Receita.img.all()
+        for img in imgs1:
             if img.img.url:
                 #print(Path(os.getcwd()+img.img.url))
                 try:
-                    os.remove(Path(os.getcwd()+img.img.url))
+                    os.remove(Path(os.getcwd()+'/ReceitasMacro'+img.img.url))
                 except:
                     print("An exception occurred")
             img.delete()
@@ -302,9 +290,7 @@ def editreceita(request,id):
         imgs = request.FILES.getlist('images')
         name = request.POST["name"]
         modoPreparo = request.POST["modopreparo"]
-        #
         rendimento = request.POST["rendimento"]
-        #
         nutricion = nutricion.split(",")
         if not nutricion or not foods or not name:
             return render(request, "ReceitasMacro/editReceita.html", {
@@ -338,15 +324,22 @@ def editreceita(request,id):
             Receita.carboidratos = carboidratos
             Receita.proteinas = proteinas
             Receita.gorduras = gorduras
-        #
         Receita.rendimento = rendimento
-        #
         Receita.timestamp = datetime.timestamp(datetime.now())
         Receita.modoPreparo = modoPreparo
         if imgs:
+            imgs1 = Receita.img.all()
+            for img in imgs1:
+                if img.img.url:
+                    #print(Path(os.getcwd()+img.img.url))
+                    try:
+                        os.remove(Path(os.getcwd()+'/ReceitasMacro'+img.img.url))
+                    except:
+                        print("An exception occurred")
+                img.delete()
             for img in imgs:
                 image = Img.objects.create(img = img)
-                convert_to_webp(Path(os.getcwd()+f"\media\images\{img.name}"))
+                convert_to_webp(Path(os.getcwd()+f"/ReceitasMacro/media/images/{img.name}"))
                 Receita.img.add(image)
 
         for categoria in Receita.label.all(): Receita.label.remove(categoria)
