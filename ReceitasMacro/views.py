@@ -147,7 +147,7 @@ def create_recipe(request):
         recipe.save()
         for img in imgs:
             image = Img.objects.create(img = img)
-            convert_to_webp(Path(os.getcwd()+f"/ReceitasMacro/media/images/{img.name}"))
+            convert_to_webp(Path(os.getcwd()+f"/media/images/{img.name}"))
             recipe.img.add(image)
         for label in my_lables:
             recipe.label.add(label)
@@ -266,7 +266,7 @@ def delreceita(request,id):
             if img.img.url:
                 #print(Path(os.getcwd()+img.img.url))
                 try:
-                    os.remove(Path(os.getcwd()+'/ReceitasMacro'+img.img.url))
+                    os.remove(Path(os.getcwd()+img.img.url))
                 except:
                     print("An exception occurred")
             img.delete()
@@ -333,13 +333,13 @@ def editreceita(request,id):
                 if img.img.url:
                     #print(Path(os.getcwd()+img.img.url))
                     try:
-                        os.remove(Path(os.getcwd()+'/ReceitasMacro'+img.img.url))
+                        os.remove(Path(os.getcwd()+img.img.url))
                     except:
                         print("An exception occurred")
                 img.delete()
             for img in imgs:
                 image = Img.objects.create(img = img)
-                convert_to_webp(Path(os.getcwd()+f"/ReceitasMacro/media/images/{img.name}"))
+                convert_to_webp(Path(os.getcwd()+f"/media/images/{img.name}"))
                 Receita.img.add(image)
 
         for categoria in Receita.label.all(): Receita.label.remove(categoria)
