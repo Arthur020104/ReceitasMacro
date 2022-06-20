@@ -94,6 +94,9 @@ function fullpage(receita)
   elemento.classList.add('canvas');
   let recipe_info = document.querySelector('.recipe-info');
   recipe_info.appendChild(elemento);
+  let sender = document.createElement("div");
+  sender.innerHTML = "<p class='text-right'><b class='color'> - </b>Criador: "+receita.sender+"</p>";
+  recipe_info.appendChild(sender);
   criapizza([receita.carboidratos*4,receita.proteinas*4,receita.gorduras*9],elemento);
   document.getElementById('Logo').scrollIntoView({behavior: "smooth"});
 }
@@ -287,7 +290,7 @@ if (message)
   if (recipebtn)
   {
     let content = document.querySelector("#ingred");
-    
+
   }
   let btn_tradutor = document.getElementById('btn_traduzir');
   if(btn_tradutor)

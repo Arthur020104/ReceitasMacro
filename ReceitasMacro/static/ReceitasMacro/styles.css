@@ -328,7 +328,7 @@ span
     }
 
 }
-@media (max-width:500px) 
+@media (max-width:500px)
 {
     .coluna-full
     {
@@ -482,7 +482,7 @@ select {
     -webkit-border-radius:25px; -moz-border-radius:25px; border-radius:25px;
 }
 
-select:hover {    
+select:hover {
     background-color:gren;
 }
 .dropdown
@@ -520,7 +520,7 @@ select:hover {
         width: 100%!important;
         height: 40vh!important;
     }
-    
+
 
 }
 @media (max-width:1000px) and (min-width:500px)
@@ -586,4 +586,8 @@ canvas
 .gray
 {
     color: #515151;
+}
+p.text-right
+{
+    margin: 1.5vh 0px 1.5vh 0px;
 }
